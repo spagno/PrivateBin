@@ -6,7 +6,7 @@
  * @link      https://github.com/PrivateBin/PrivateBin
  * @copyright 2012 Sébastien SAUVAGE (sebsauvage.net)
  * @license   https://www.opensource.org/licenses/zlib-license.php The zlib/libpng License
- * @version   1.2
+ * @version   1.2.1
  */
 
 body {
@@ -143,4 +143,8 @@ footer h4 {
 
 li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
 	list-style-type: decimal !important;
+}
+
+.dark-theme .alert-info .alert-link {
+	color: #fff;
 }
