@@ -11,7 +11,7 @@ options](#configuration) to adjust as you see fit.
 
 ### Minimal requirements
 
-- PHP version 5.4 or above
+- PHP version 5.5 or above
 - _one_ of the following sources of cryptographically safe randomness is required:
   - PHP 7 or higher
   - [Libsodium](https://download.libsodium.org/libsodium/content/installation/) and it's [PHP extension](https://paragonie.com/book/pecl-libsodium/read/00-intro.md#installing-libsodium)
@@ -139,7 +139,7 @@ For reference or if you want to create the table schema for yourself to avoid ha
 ```sql
 CREATE TABLE prefix_paste (
     dataid CHAR(16) NOT NULL,
-    data BLOB,
+    data MEDIUMBLOB,
     postdate INT,
     expiredate INT,
     opendiscussion INT,
@@ -165,7 +165,7 @@ CREATE INDEX parent ON prefix_comment(pasteid);
 CREATE TABLE prefix_config (
     id CHAR(16) NOT NULL, value TEXT, PRIMARY KEY (id)
 );
-INSERT INTO prefix_config VALUES('VERSION', '1.2.1');
+INSERT INTO prefix_config VALUES('VERSION', '1.3.1');
 ```
 
 In **PostgreSQL**, the data, attachment, nickname and vizhash columns needs to be TEXT and not BLOB or MEDIUMBLOB.

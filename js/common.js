@@ -5,28 +5,32 @@ global.assert = require('assert');
 global.jsc = require('jsverify');
 global.jsdom = require('jsdom-global');
 global.cleanup = global.jsdom();
+global.URL = require('jsdom-url').URL;
 global.fs = require('fs');
+global.WebCrypto = require('node-webcrypto-ossl');
 
 // application libraries to test
-global.$ = global.jQuery = require('./jquery-3.3.1');
-global.sjcl = require('./sjcl-1.0.7');
-global.Base64 = require('./base64-2.4.5').Base64;
-global.RawDeflate = require('./rawdeflate-0.5').RawDeflate;
-global.RawDeflate.inflate = require('./rawinflate-0.3').RawDeflate.inflate;
+global.$ = global.jQuery = require('./jquery-3.4.1');
+global.RawDeflate = require('./rawinflate-0.3').RawDeflate;
+global.zlib = require('./zlib-1.2.11').zlib;
 require('./prettify');
 global.prettyPrint = window.PR.prettyPrint;
 global.prettyPrintOne = window.PR.prettyPrintOne;
-global.showdown = require('./showdown-1.8.6');
-global.DOMPurify = require('./purify-1.0.7');
+global.showdown = require('./showdown-1.9.1');
+global.DOMPurify = require('./purify-2.0.7');
+global.baseX = require('./base-x-3.0.5.1').baseX;
+global.Legacy = require('./legacy').Legacy;
 require('./bootstrap-3.3.7');
 require('./privatebin');
 
 // internal variables
-var a2zString = ['a','b','c','d','e','f','g','h','i','j','k','l','m',
-                     'n','o','p','q','r','s','t','u','v','w','x','y','z'],
-    alnumString = a2zString.concat(['0','1','2','3','4','5','6','7','8','9']),
-    queryString = alnumString.concat(['+','%','&','.','*','-','_']),
-    hashString = queryString.concat(['!']),
+var a2zString    = ['a','b','c','d','e','f','g','h','i','j','k','l','m',
+                    'n','o','p','q','r','s','t','u','v','w','x','y','z'],
+    digitString  = ['0','1','2','3','4','5','6','7','8','9'],
+    alnumString  = a2zString.concat(digitString),
+    hexString    = digitString.concat(['a','b','c','d','e','f']),
+    queryString  = alnumString.concat(['+','%','&','.','*','-','_']),
+    hashString   = queryString.concat(['!']),
     base64String = alnumString.concat(['+','/','=']).concat(
         a2zString.map(function(c) {
             return c.toUpperCase();
@@ -51,14 +55,8 @@ var a2zString = ['a','b','c','d','e','f','g','h','i','j','k','l','m',
         '`': '&#x60;',
         '=': '&#x3D;'
     },
-    logFile = fs.createWriteStream('test.log'),
     mimeFile = fs.createReadStream('/etc/mime.types'),
     mimeLine = '';
-
-// redirect console messages to log file
-console.info = console.warn = console.error = function () {
-    logFile.write(Array.prototype.slice.call(arguments).join('') + '\n');
-};
 
 // populate mime types from environment
 mimeFile.on('data', function(data) {
@@ -96,6 +94,8 @@ function parseMime(line) {
 }
 
 // common testing helper functions
+exports.atob = atob;
+exports.btoa = btoa;
 
 /**
  * convert all applicable characters to HTML entities
@@ -121,6 +121,11 @@ exports.jscA2zString = function() {
 // provides random lowercase alpha numeric characters (a to z and 0 to 9)
 exports.jscAlnumString = function() {
     return jsc.elements(alnumString);
+};
+
+//provides random characters allowed in hexadecimal notation
+exports.jscHexString = function() {
+    return jsc.elements(hexString);
 };
 
 // provides random characters allowed in GET queries

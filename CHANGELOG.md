@@ -1,6 +1,44 @@
 # PrivateBin version history
 
-  * **1.3 (not yet released)**
+  * **1.4 (not yet released)**
+    * ADDED: Translation for Ukrainian (#533)
+    * ADDED: Option to send a mail with the link, when creating a paste (#398)
+    * FIXED: Password disabling option (#527)
+  * **1.3.1 (2019-09-22)**
+    * ADDED: Translation for Bulgarian (#455)
+    * CHANGED: Improved mobile UI - obscured send button and hard to click shortener button (#477)
+    * CHANGED: Enhanced URL shortener integration (#479)
+    * CHANGED: Improved file upload drag & drop UI (#317)
+    * CHANGED: Increased default size limit from 2 to 10 MiB, switch data from BLOB to MEDIUMBLOB in MySQL (#458)
+    * CHANGED: Upgrading libraries to: DOMpurify 2.0.1
+    * FIXED: Enabling browsers without WASM to create pastes and read uncompressed ones (#454)
+    * FIXED: Cloning related issues (#489, #491, #493, #494)
+    * FIXED: Enable file operation only when editing (#497) 
+    * FIXED: Clicking 'New' on a previously submitted paste does not blank address bar (#354)
+    * FIXED: Clear address bar when create new paste from existing paste (#479)
+    * FIXED: Discussion section not hiding when new/clone paste is clicked on (#484)
+    * FIXED: Showdown.js error when posting svg qrcode (#485)
+    * FIXED: Failed to handle the case where user cancelled attachment selection properly (#487)
+    * FIXED: Displaying the appropriate errors in older browsers (#508)
+  * **1.3 (2019-07-09)**
+    * ADDED: Translation for Czech (#424)
+    * ADDED: Threat modeled the application (#177)
+    * ADDED: Made compression configurable (#38)
+    * CHANGED: Minimum required PHP version is 5.5, due to a change in the identicon library
+    * CHANGED: Minimum required browser versions are Firefox 54, Chrome 57, Opera 44, Safari 11, Edge 16, due to use of WebCrypto API, async/await, ES6 & WebAssembly features - all Internet Explorer versions are incompatible
+    * CHANGED: JSON and encryption formats were changed to replace SJCL library by browser integrated WebCrypto API (#28, #74)
+    * CHANGED: Replaced rawdeflate.js with zlib.wasm to resolve decompression failures and gain compatibility with standard deflate implementations (#193, #260, #328, #434, #440)
+    * CHANGED: Increase PBKDF2 iterations to 100k (#350)
+    * CHANGED: Replaced last use of MD5 with Fowler–Noll–Vo checksum which produces the exact length we need for the paste ID (#49)
+    * CHANGED: Simplified some PHP code & renamed PrivateBin class into Controller, to make MVC pattern use more obvious (#342)
+    * CHANGED: Upgrading libraries to: identicon 1.2.0, random_compat 2.0.18, jQuery 3.4.1, Showdown 1.9.0, DOMpurify 1.0.11 & kjua 0.6.0
+    * FIXED: Prevent Chrome from sending content of paste to Google for translation (#378)
+    * FIXED: To support attachments larger then 2 MiB in newer Chrome versions, we switched to blob instead of data URIs (#432)
+    * FIXED: Since Outlook strips trailing equal signs in links, the key in URL hash is now base58 encoded, instead of base64 (#377)
+    * FIXED: Facebooks started injecting parameters into shared URLs for tracking that lead to inaccessible pastes (#396)
+    * FIXED: Properly escaped HTML in raw text mode (#358)
+    * FIXED: Made download links better readable in the dark bootstrap theme (#364)
+    * FIXED: Allow Letsencrypt bot to access on apache servers (#413)
   * **1.2.1 (2018-08-11)**
     * ADDED: Add support for mega.nz links in pastes and comments (#331)
     * CHANGED: Added some missing Russian translations (#348)
